@@ -1,0 +1,13 @@
+<!-- movies/templates/movies/movie_detail.html -->
+{% extends 'movies/base.html' %}
+
+{% block content_title %}Movie Detail{% endblock %}
+
+{% block content %}
+  <h1><a href="{{ movie.imdb_link }}" target="_blank">{{ movie.title }}</a></h1>
+  <img src="{{ movie.thumbnail_url }}" alt="{{ movie.title }} thumbnail">
+  <p><strong>Director:</strong> {{ movie.director }}</p>
+  <p><strong>Cast:</strong> {{ movie.cast }}</p>
+  <p><strong>Genres:</strong> {{ movie.genres }}</p>
+  <a href="{{ movie.imdb_link }}" target="_blank">IMDb Link</a>
+{% endblock %}

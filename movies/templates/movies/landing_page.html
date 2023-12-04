@@ -1,0 +1,98 @@
+<!-- your_app/templates/your_app/landing_page.html -->
+
+{% extends 'movies/base.html' %}
+
+{% block content %}
+{% load static %}
+
+<div class="landing-container">
+  <div class="landing-background">
+    <img src="{% static 'movies/images/movies.PNG' %}" alt="Movie Database Image">
+  </div>
+
+  <div class="image-overlay"></div>
+
+  <div class="landing-content">
+    <h1 class="top-right">Welcome to Movie Database</h1>
+
+    <ul>
+      <li><a href="{% url 'movie_add' %}" class="white-link">Add a New Movie</a></li>
+      <li><a href="{% url 'movie_list' %}" class="white-link">List Movies</a></li>
+      <li><a href="{% url 'movie_search' %}" class="white-link">Search Movies</a></li>
+      <li><a href="{% url 'edit_movie_list' %}" class="white-link">Edit Movies List</a></li>
+    </ul>
+  </div>
+</div>
+
+<link rel="stylesheet" href="{% static 'your_app/style.css' %}">
+
+<style>
+  body, html {
+    height: 100%;
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+  }
+
+  .landing-container {
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .landing-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .landing-background img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Adjust the alpha channel for opacity */
+  }
+
+  .landing-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+    z-index: 1; /* Ensure content is on top of the image */
+  }
+
+  .landing-content h1 {
+    font-size: 3em;
+    margin-bottom: 20px;
+  }
+
+  .landing-content ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .landing-content ul li {
+    margin: 10px 0;
+  }
+
+  .white-link {
+    color: white; /* Set the color to white */
+    text-decoration: none; /* Remove the underline */
+  }
+
+  /* ... (remaining styles) */
+</style>
+{% endblock %}
+
+{% block home_link %}{% endblock %}

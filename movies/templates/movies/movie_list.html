@@ -1,0 +1,18 @@
+<!-- movies/templates/movies/movie_list.html -->
+{% extends 'movies/base.html' %}
+
+{% block content %}
+  <h1>Movie List</h1>
+
+  {% for movie in movies %}
+    <h2><a href="{% url 'movie_detail' pk=movie.pk %}">{{ movie.title }}</a></h2>
+    
+    <!-- Set the width and height for the thumbnail -->
+    <img src="{{ movie.thumbnail_url }}" alt="{{ movie.title }} thumbnail" style="width: 67px; height: 98px;">
+    
+    <p><strong>Director:</strong> {{ movie.director }}</p>
+    <p><strong>Cast:</strong> {{ movie.cast }}</p>
+    <p><strong>Genres:</strong> {{ movie.genres }}</p>
+    <p><strong>IMDb Link:</strong> <a href="{{ movie.imdb_link }}" target="_blank">{{ movie.imdb_link }}</a></p>
+  {% endfor %}
+{% endblock %}
