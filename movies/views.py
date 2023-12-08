@@ -10,8 +10,15 @@ import requests
 
 # movies/views.py
 
+# def landing_page(request):
+#     return render(request, 'movies/landing_page.html')
+
+# movies/views.py
+
 def landing_page(request):
-    return render(request, 'movies/landing_page.html')
+    trending_movies = Movie.objects.all().order_by('-id')[:5]  # Fetch the latest 5 movies
+    return render(request, 'movies/landing_page.html', {'trending_movies': trending_movies})
+
 
 
 def movie_list(request):

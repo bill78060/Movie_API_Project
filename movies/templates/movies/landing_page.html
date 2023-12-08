@@ -1,98 +1,84 @@
-<!-- your_app/templates/your_app/landing_page.html -->
 
+<!-- your_app/templates/your_app/landing_page.html -->
 {% extends 'movies/base.html' %}
 
 {% block content %}
 {% load static %}
 
+<div class="navbar">
+  <a href="{% url 'movie_add' %}" class="navbar-link">Add a New Movie</a>
+  <a href="{% url 'movie_list' %}" class="navbar-link">List Movies</a>
+  <a href="{% url 'movie_search' %}" class="navbar-link">Search Movies</a>
+  <a href="{% url 'edit_movie_list' %}" class="navbar-link">Edit Movies </a>
+</div>
+
 <div class="landing-container">
   <div class="landing-background">
-    <img src="{% static 'movies/images/movies.PNG' %}" alt="Movie Database Image">
+    <!-- You can add a different background image or color here -->
   </div>
 
   <div class="image-overlay"></div>
 
   <div class="landing-content">
     <h1 class="top-right">Welcome to Movie Database</h1>
+  </div>
 
-    <ul>
-      <li><a href="{% url 'movie_add' %}" class="white-link">Add a New Movie</a></li>
-      <li><a href="{% url 'movie_list' %}" class="white-link">List Movies</a></li>
-      <li><a href="{% url 'movie_search' %}" class="white-link">Search Movies</a></li>
-      <li><a href="{% url 'edit_movie_list' %}" class="white-link">Edit Movies List</a></li>
-    </ul>
+  <div class="trending-movies">
+    <h2>Trending Movies</h2>
+    <!-- Display the latest movie images here -->
+    {% for movie in trending_movies %}
+      <img src="{{ movie.thumbnail_url }}" alt="{{ movie.title }} thumbnail" class="trending-movie-thumbnail">
+    {% endfor %}
   </div>
 </div>
 
-<link rel="stylesheet" href="{% static 'your_app/style.css' %}">
+<link rel="stylesheet" href="{% static 'movies/style.css' %}">
 
 <style>
-  body, html {
-    height: 100%;
-    margin: 0;
-    font-family: 'Arial', sans-serif;
+  .navbar {
+    overflow: hidden;
+    background-color: #333; /* Set the navbar background color */
   }
 
-  .landing-container {
-    position: relative;
-    height: 100vh;
-    overflow: hidden;
+  .navbar-link {
+    float: left;
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+
+  .navbar-link:hover {
+    background-color: #ddd; /* Set the background color on hover */
+    color: black;
+  }
+
+  /* ... (previous styles) */
+
+  body {
+    background-color: #282c34; /* Set the body background color */
   }
 
   .landing-background {
-    position: absolute;
-    top: 0;
-    left: 0;
+    /* You can add a different background image or color here */
+    background-color: #3f51b5; /* Set the landing background color */
     width: 100%;
     height: 100%;
   }
 
-  .landing-background img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .image-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Adjust the alpha channel for opacity */
-  }
-
-  .landing-content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  .trending-movies {
+    margin-top: 20px;
     text-align: center;
-    color: white;
-    z-index: 1; /* Ensure content is on top of the image */
   }
 
-  .landing-content h1 {
-    font-size: 3em;
-    margin-bottom: 20px;
-  }
-
-  .landing-content ul {
-    list-style: none;
-    padding: 0;
-  }
-
-  .landing-content ul li {
-    margin: 10px 0;
-  }
-
-  .white-link {
-    color: white; /* Set the color to white */
-    text-decoration: none; /* Remove the underline */
+  .trending-movie-thumbnail {
+    width: 100px;
+    height: 150px;
+    margin: 10px;
   }
 
   /* ... (remaining styles) */
 </style>
 {% endblock %}
 
-{% block home_link %}{% endblock %}

@@ -1,27 +1,55 @@
-
 <!-- movies/templates/movies/movie_form.html -->
-
 {% extends 'movies/base.html' %}
 {% load crispy_forms_tags %}
 {% block content %}
-  <h2 class="mt-4">Add Movie</h2>
+  <div class="container mt-4">
+    <h2>Add Movie</h2>
 
-  <form method="post" enctype="multipart/form-data" class="mt-3">
-    {% csrf_token %}
-    
-    {{ form|crispy }}
-    
-    {% if form.instance.thumbnail_url %}
-      <div class="mb-3">
-        <label class="form-label">Thumbnail:</label>
-        <img src="{{ form.instance.thumbnail_url }}" alt="Movie Thumbnail" class="img-thumbnail">
+    <form method="post" enctype="multipart/form-data" class="mt-3">
+      {% csrf_token %}
+      
+      <div class="row mb-3">
+        <div class="col-md-6">
+          {{ form.title|as_crispy_field }}
+        </div>
+        <div class="col-md-6">
+          {{ form.director|as_crispy_field }}
+        </div>
       </div>
-    {% endif %}
 
-    <div class="row">
-      <div class="col-sm-10 offset-sm-2">
-        <button type="submit" class="btn btn-primary">Save</button>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          {{ form.cast|as_crispy_field }}
+        </div>
+        <div class="col-md-6">
+          {{ form.genres|as_crispy_field }}
+        </div>
       </div>
-    </div>
-  </form>
+
+      <div class="row mb-3">
+        <div class="col-md-6">
+          {{ form.imdb_link|as_crispy_field }}
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-6">
+          {{ form.thumbnail_url|as_crispy_field }}
+        </div>
+      </div>
+
+      {% if form.instance.thumbnail_url %}
+        <div class="mb-3">
+          <label class="form-label">Thumbnail:</label>
+          <img src="{{ form.instance.thumbnail_url }}" alt="Movie Thumbnail" class="img-thumbnail">
+        </div>
+      {% endif %}
+
+      <div class="row">
+        <div class="col-md-6 offset-md-3">
+          <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+      </div>
+    </form>
+  </div>
 {% endblock %}

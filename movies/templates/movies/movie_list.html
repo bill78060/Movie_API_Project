@@ -1,18 +1,26 @@
+
 <!-- movies/templates/movies/movie_list.html -->
 {% extends 'movies/base.html' %}
 
 {% block content %}
-  <h1>Movie List</h1>
+  <div class="container mt-4">
+    <h1 class="mb-4">Movie List</h1>
 
-  {% for movie in movies %}
-    <h2><a href="{% url 'movie_detail' pk=movie.pk %}">{{ movie.title }}</a></h2>
-    
-    <!-- Set the width and height for the thumbnail -->
-    <img src="{{ movie.thumbnail_url }}" alt="{{ movie.title }} thumbnail" style="width: 67px; height: 98px;">
-    
-    <p><strong>Director:</strong> {{ movie.director }}</p>
-    <p><strong>Cast:</strong> {{ movie.cast }}</p>
-    <p><strong>Genres:</strong> {{ movie.genres }}</p>
-    <p><strong>IMDb Link:</strong> <a href="{{ movie.imdb_link }}" target="_blank">{{ movie.imdb_link }}</a></p>
-  {% endfor %}
+    <div class="row">
+      {% for movie in movies %}
+        <div class="col-md-4 mb-4">
+          <div class="card">
+            <img src="{{ movie.thumbnail_url }}" alt="{{ movie.title }} thumbnail" class="card-img-top">
+            <div class="card-body">
+              <h5 class="card-title"><a href="{% url 'movie_detail' pk=movie.pk %}">{{ movie.title }}</a></h5>
+              <p class="card-text"><strong>Director:</strong> {{ movie.director }}</p>
+              <p class="card-text"><strong>Cast:</strong> {{ movie.cast }}</p>
+              <p class="card-text"><strong>Genres:</strong> {{ movie.genres }}</p>
+              <a href="{{ movie.imdb_link }}" target="_blank" class="btn btn-primary">IMDb Link</a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
 {% endblock %}

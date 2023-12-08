@@ -1,28 +1,32 @@
+
 <!-- movies/templates/movies/edit_movie_list.html -->
 {% extends 'movies/base.html' %}
 
 {% block content %}
-  <h1>Edit Movies</h1>
+  <div class="container mt-4">
+    <h1 class="mb-4">Edit Movies</h1>
 
-  <table>
-    <thead>
-      <tr>
-        <th>Title</th>
-        <th>Director</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for movie in movies %}
+    <table class="table">
+      <thead>
         <tr>
-          <td>{{ movie.title }}</td>
-          <td>{{ movie.director }}</td>
-          <td>
-            <a href="{% url 'movie_edit' pk=movie.pk %}">Edit</a> |
-            <a href="{% url 'movie_delete' pk=movie.pk %}">Delete</a>
-          </td>
+          <th>Title</th>
+          <th>Director</th>
+          <th>Actions</th>
         </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        {% for movie in movies %}
+          <tr>
+            <td>{{ movie.title }}</td>
+            <td>{{ movie.director }}</td>
+            <td>
+              <a href="{% url 'movie_edit' pk=movie.pk %}" class="btn btn-primary btn-sm">Edit</a>
+              <a href="{% url 'movie_delete' pk=movie.pk %}" class="btn btn-danger btn-sm">Delete</a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 {% endblock %}
+

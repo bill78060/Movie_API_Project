@@ -126,10 +126,21 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# STATIC_URL = '/static/'
+
+# # Specify the STATICFILES_DIRS relative to the 'movies' app
+# STATICFILES_DIRS = [os.path.join(BASE_DIR, 'movies/static')]
+
+
+
+# STATIC_URL = '/static/'
+# STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
+# Base URL to serve static files
 STATIC_URL = '/static/'
 
-# Specify the STATICFILES_DIRS relative to the 'movies' app
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'movies/static')]
+# Location where static files will be collected during deployment
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
