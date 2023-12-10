@@ -8,17 +8,9 @@ import requests
 
 # Create your views here.
 
-# movies/views.py
-
-# def landing_page(request):
-#     return render(request, 'movies/landing_page.html')
-
-# movies/views.py
-
 def landing_page(request):
     trending_movies = Movie.objects.all().order_by('-id')[:5]  # Fetch the latest 5 movies
     return render(request, 'movies/landing_page.html', {'trending_movies': trending_movies})
-
 
 
 def movie_list(request):
@@ -110,3 +102,164 @@ def movie_search(request):
         movies_local = Movie.objects.none()
 
     return render(request, 'movies/movie_search.html', {'movies': movies_local, 'query': query, 'search_by': search_by})
+
+# Inside views.py
+from django.http import JsonResponse
+
+# def search_and_save_movie(request):
+#     if request.method == 'POST':
+#         # Extract the search query from the form submission
+#         search_query = request.POST.get('search_query')
+
+#         # Make an API call to OMDb using the provided fetch_movie_data function
+#         movie_data = fetch_movie_data(search_query)
+
+#         # Check if the movie already exists in the database
+#         imdb_link = movie_data.get('imdbID')
+#         existing_movie_check = check_movie_existence(request, imdb_link)
+#         existing_movie_data = existing_movie_check.json()
+
+#         # Return JSON response with the movie_data and existence check
+#         return JsonResponse({'movie_data': movie_data, 'exists': existing_movie_data['exists']})
+
+# def search_and_save_movie(request):
+#     if request.method == 'POST':
+#         # Extract the search query from the form submission
+#         search_query = request.POST.get('search_query')
+
+#         # Make an API call to OMDb using the provided fetch_movie_data function
+#         movie_data = fetch_movie_data(search_query)
+
+#         # Return JSON response with the movie_data
+#         return JsonResponse(movie_data)
+
+def search_and_save_movie(request):
+    if request.method == 'POST':
+        # Extract the search query from the form submission
+        search_query = request.POST.get('search_query')
+
+        # Make an API call to OMDb using the provided fetch_movie_data function
+        movie_data = fetch_movie_data(search_query)
+
+        # Return JSON response with the movie_data
+        return JsonResponse(movie_data)
+
+
+# Inside views.py
+# Inside views.py
+# Inside views.py
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
+from .models import Movie
+
+def save_movie(request):
+    if request.method == 'POST':
+        # Extract movie details from the form submission
+        title = request.POST.get('title')
+        director = request.POST.get('director')
+        cast = request.POST.get('cast')
+        genres = request.POST.get('genres')
+        imdb_link = request.POST.get('imdb_link')
+        thumbnail_url = request.POST.get('thumbnail_url')
+
+        # Check if the movie already exists in the database
+        existing_movie = Movie.objects.filter(title=title).exists()
+
+        if existing_movie:
+            # Movie already exists, return a response indicating that
+            return JsonResponse({'message': 'Movie already exists in the database'})
+
+        # Save the movie to the database
+        Movie.objects.create(
+            title=title,
+            director=director,
+            cast=cast,
+            genres=genres,
+            imdb_link=imdb_link,
+            thumbnail_url=thumbnail_url
+        )
+
+        # Return a success response
+        return JsonResponse({'message': 'Movie saved successfully'})
+
+
+
+
+
+
+
+
+# Inside views.py
+# Inside views.py
+
+
+from django.http import JsonResponse
+import json
+
+# def search_and_save_movie(request):
+#     if request.method == 'POST':
+#         # Extract the search query from the form submission
+#         search_query = request.POST.get('search_query')
+
+#         # Make an API call to OMDb using the provided fetch_movie_data function
+#         movie_data = fetch_movie_data(search_query)
+
+#         # Check if the movie already exists in the database
+#         imdb_link = movie_data.get('imdbID')
+#         existing_movie_check = check_movie_existence(request, imdb_link)
+#         existing_movie_data = json.loads(existing_movie_check.content.decode('utf-8'))
+
+#         # Return JSON response with the movie_data and existence check
+#         return JsonResponse({'movie_data': movie_data, 'exists': existing_movie_data['exists']})
+
+# def check_movie_existence(request, imdb_link):
+#     existing_movie = Movie.objects.filter(imdb_link=imdb_link).exists()
+
+#     if existing_movie:
+#         return JsonResponse({'exists': True, 'message': 'Movie already exists in the database.'})
+#     else:
+#         return JsonResponse({'exists': False, 'message': 'Movie does not exist in the database.'})
+    
+
+# def save_movie(request, movie_data):
+#     title = movie_data.get('Title')
+#     director = movie_data.get('Director')
+#     cast = movie_data.get('Actors')
+#     genres = movie_data.get('Genre')
+#     imdb_link = movie_data.get('imdbID')
+#     thumbnail_url = movie_data.get('Poster')
+
+#     Movie.objects.create(
+#         title=title,
+#         director=director,
+#         cast=cast,
+#         genres=genres,
+#         imdb_link=imdb_link,
+#         thumbnail_url=thumbnail_url
+#     )
+
+#     return JsonResponse({'message': 'Movie saved successfully'})
+
+# def search_and_save_movie(request):
+#     if request.method == 'POST':
+#         search_query = request.POST.get('search_query')
+#         movie_data = fetch_movie_data(search_query)
+#         imdb_link = movie_data.get('imdbID')
+
+#         existing_movie = Movie.objects.filter(imdb_link=imdb_link).exists()
+
+#         if existing_movie:
+#             return JsonResponse({'exists': True, 'message': 'Movie already exists in the database.'})
+#         else:
+#             save_movie(request, movie_data)
+#             return JsonResponse({'exists': False, 'message': 'Movie saved successfully.'})
+
+#     return JsonResponse({'error': 'Invalid request.'})
+
+def fetch_movie_data(title):
+    api_key = 'f5845287'  
+    url = f'http://www.omdbapi.com/?apikey={api_key}&t={title}'
+    response = requests.get(url)
+    return response.json()
+
+# views.py
